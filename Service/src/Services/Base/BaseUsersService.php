@@ -107,27 +107,31 @@ abstract class BaseUsersService
     /**
      * @param string $field
      * @param $value
+     * @param $orderBy string Field to sort by
+     * @param $orderDirection string Direction to sort (Select::ORDER_ASCENDING || Select::ORDER_DESCENDING)
      * @return Models\UsersModel
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getByField(string $field, $value) : Models\UsersModel
+    public function getByField(string $field, $value, $orderBy = null, $orderDirection = Select::ORDER_ASCENDING) : Models\UsersModel
     {
         /** @var TableGateways\UsersTableGateway $usersTable */
         $usersTable = $this->getNewTableGatewayInstance();
-        return $usersTable->getByField($field, $value);
+        return $usersTable->getByField($field, $value, $orderBy, $orderDirection);
     }
 
     /**
      * @param string $field
      * @param $value
+     * @param $orderBy string Field to sort by
+     * @param $orderDirection string Direction to sort (Select::ORDER_ASCENDING || Select::ORDER_DESCENDING)
      * @return Models\UsersModel[]
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getManyByField(string $field, $value) : array
+    public function getManyByField(string $field, $value, $orderBy = null, $orderDirection = Select::ORDER_ASCENDING) : array
     {
         /** @var TableGateways\UsersTableGateway $usersTable */
         $usersTable = $this->getNewTableGatewayInstance();
-        return $usersTable->getManyByField($field, $value);
+        return $usersTable->getManyByField($field, $value, $orderBy, $orderDirection);
     }
 
     /**

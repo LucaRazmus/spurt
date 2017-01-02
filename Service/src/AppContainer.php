@@ -1,26 +1,34 @@
 <?php
-$this->container[\Spurt\Services\CharactersService::class] = function (Slim\Container $c) {
-    return new \Spurt\Services\CharactersService(
+$this->container[\Spurt\Services\CauseOrgasmLinkService::class] = function (Slim\Container $c) {
+    return new \Spurt\Services\CauseOrgasmLinkService(
+        // Related Objects.
+        $c->get(\Spurt\TableGateways\CausesTableGateway::class),
+        $c->get(\Spurt\TableGateways\OrgasmsTableGateway::class),
+        // Remote Constraints.
+        // Self TableGateway.
+        $c->get(\Spurt\TableGateways\CauseOrgasmLinkTableGateway::class)
+    );
+};
+$this->container[\Spurt\Services\CausesService::class] = function (Slim\Container $c) {
+    return new \Spurt\Services\CausesService(
+        // Related Objects.
+        // Remote Constraints.
+        // Self TableGateway.
+        $c->get(\Spurt\TableGateways\CausesTableGateway::class)
+    );
+};
+$this->container[\Spurt\Services\OrgasmsService::class] = function (Slim\Container $c) {
+    return new \Spurt\Services\OrgasmsService(
         // Related Objects.
         $c->get(\Spurt\TableGateways\UsersTableGateway::class),
         // Remote Constraints.
         // Self TableGateway.
-        $c->get(\Spurt\TableGateways\CharactersTableGateway::class)
-    );
-};
-$this->container[\Spurt\Services\MessagesService::class] = function (Slim\Container $c) {
-    return new \Spurt\Services\MessagesService(
-        // Related Objects.
-        $c->get(\Spurt\TableGateways\CharactersTableGateway::class),
-        // Remote Constraints.
-        // Self TableGateway.
-        $c->get(\Spurt\TableGateways\MessagesTableGateway::class)
+        $c->get(\Spurt\TableGateways\OrgasmsTableGateway::class)
     );
 };
 $this->container[\Spurt\Services\SessionsService::class] = function (Slim\Container $c) {
     return new \Spurt\Services\SessionsService(
         // Related Objects.
-        $c->get(\Spurt\TableGateways\UsersTableGateway::class),
         // Remote Constraints.
         // Self TableGateway.
         $c->get(\Spurt\TableGateways\SessionsTableGateway::class)
@@ -36,23 +44,29 @@ $this->container[\Spurt\Services\UsersService::class] = function (Slim\Container
 };
 
 
-$this->container[\Spurt\TableGateways\CharactersTableGateway::class] = function (Slim\Container $c) {
-    return new \Spurt\TableGateways\CharactersTableGateway(
-        $c->get(\Spurt\TableGateways\UsersTableGateway::class),
+$this->container[\Spurt\TableGateways\CauseOrgasmLinkTableGateway::class] = function (Slim\Container $c) {
+    return new \Spurt\TableGateways\CauseOrgasmLinkTableGateway(
+        $c->get(\Spurt\TableGateways\CausesTableGateway::class),
+        $c->get(\Spurt\TableGateways\OrgasmsTableGateway::class),
         $c->get('Faker'),
         $c->get('DatabaseInstance')
     );
 };
-$this->container[\Spurt\TableGateways\MessagesTableGateway::class] = function (Slim\Container $c) {
-    return new \Spurt\TableGateways\MessagesTableGateway(
-        $c->get(\Spurt\TableGateways\CharactersTableGateway::class),
+$this->container[\Spurt\TableGateways\CausesTableGateway::class] = function (Slim\Container $c) {
+    return new \Spurt\TableGateways\CausesTableGateway(
+        $c->get('Faker'),
+        $c->get('DatabaseInstance')
+    );
+};
+$this->container[\Spurt\TableGateways\OrgasmsTableGateway::class] = function (Slim\Container $c) {
+    return new \Spurt\TableGateways\OrgasmsTableGateway(
+        $c->get(\Spurt\TableGateways\UsersTableGateway::class),
         $c->get('Faker'),
         $c->get('DatabaseInstance')
     );
 };
 $this->container[\Spurt\TableGateways\SessionsTableGateway::class] = function (Slim\Container $c) {
     return new \Spurt\TableGateways\SessionsTableGateway(
-        $c->get(\Spurt\TableGateways\UsersTableGateway::class),
         $c->get('Faker'),
         $c->get('DatabaseInstance')
     );
@@ -64,17 +78,23 @@ $this->container[\Spurt\TableGateways\UsersTableGateway::class] = function (Slim
     );
 };
 
-$this->container['CharactersMockModel'] = function (Slim\Container $c) {
-    /** @var Spurt\TableGateways\CharactersTableGateway $CharactersTableGateway */
-    $CharactersTableGateway = $c->get(\Spurt\TableGateways\CharactersTableGateway::class);
-    $newCharactersObject = $CharactersTableGateway->getNewMockModelInstance();
-    return $newCharactersObject;
+$this->container['CauseOrgasmLinkMockModel'] = function (Slim\Container $c) {
+    /** @var Spurt\TableGateways\CauseOrgasmLinkTableGateway $CauseOrgasmLinkTableGateway */
+    $CauseOrgasmLinkTableGateway = $c->get(\Spurt\TableGateways\CauseOrgasmLinkTableGateway::class);
+    $newCauseOrgasmLinkObject = $CauseOrgasmLinkTableGateway->getNewMockModelInstance();
+    return $newCauseOrgasmLinkObject;
 };
-$this->container['MessagesMockModel'] = function (Slim\Container $c) {
-    /** @var Spurt\TableGateways\MessagesTableGateway $MessagesTableGateway */
-    $MessagesTableGateway = $c->get(\Spurt\TableGateways\MessagesTableGateway::class);
-    $newMessagesObject = $MessagesTableGateway->getNewMockModelInstance();
-    return $newMessagesObject;
+$this->container['CausesMockModel'] = function (Slim\Container $c) {
+    /** @var Spurt\TableGateways\CausesTableGateway $CausesTableGateway */
+    $CausesTableGateway = $c->get(\Spurt\TableGateways\CausesTableGateway::class);
+    $newCausesObject = $CausesTableGateway->getNewMockModelInstance();
+    return $newCausesObject;
+};
+$this->container['OrgasmsMockModel'] = function (Slim\Container $c) {
+    /** @var Spurt\TableGateways\OrgasmsTableGateway $OrgasmsTableGateway */
+    $OrgasmsTableGateway = $c->get(\Spurt\TableGateways\OrgasmsTableGateway::class);
+    $newOrgasmsObject = $OrgasmsTableGateway->getNewMockModelInstance();
+    return $newOrgasmsObject;
 };
 $this->container['SessionsMockModel'] = function (Slim\Container $c) {
     /** @var Spurt\TableGateways\SessionsTableGateway $SessionsTableGateway */

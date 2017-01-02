@@ -7,7 +7,7 @@ use Segura\AppCore\Interfaces\ModelInterface as ModelInterface;
 use \Spurt\Services;
 use \Spurt\Models;
 use \Spurt\TableGateways;
-use \Spurt\Models\SessionsModel;
+use \Spurt\Models\OrgasmsModel;
 
 /********************************************************
  *             ___                         __           *
@@ -22,7 +22,7 @@ use \Spurt\Models\SessionsModel;
  * this classes behaviours, do so in the class that     *
  * extends this, or modify the Zenderator Template!     *
  ********************************************************/
-abstract class BaseSessionsModel
+abstract class BaseOrgasmsModel
     extends AbstractModel
     implements ModelInterface
 {
@@ -30,8 +30,7 @@ abstract class BaseSessionsModel
     // Declare what fields are available on this object
     const FIELD_ID = 'id';
     const FIELD_USER_ID = 'user_id';
-    const FIELD_START = 'start';
-    const FIELD_END = 'end';
+    const FIELD_DATETIME = 'datetime';
 
     protected $_primary_keys = ['id'];
 
@@ -39,11 +38,10 @@ abstract class BaseSessionsModel
 
     protected $id;
     protected $user_id;
-    protected $start;
-    protected $end;
+    protected $datetime;
 
     /**
-     * @returns SessionsModel
+     * @returns OrgasmsModel
      */
     static public function factory()
     {
@@ -58,7 +56,7 @@ abstract class BaseSessionsModel
     }
 
     /**
-     * @returns SessionsModel
+     * @returns OrgasmsModel
      */
     public function setId(int $id = null)
     {
@@ -74,7 +72,7 @@ abstract class BaseSessionsModel
     }
 
     /**
-     * @returns SessionsModel
+     * @returns OrgasmsModel
      */
     public function setUser_id(int $user_id = null)
     {
@@ -85,32 +83,16 @@ abstract class BaseSessionsModel
     /**
      * @returns string
      */
-    public function getStart()     {
-        return $this->start;
+    public function getDatetime()     {
+        return $this->datetime;
     }
 
     /**
-     * @returns SessionsModel
+     * @returns OrgasmsModel
      */
-    public function setStart(string $start = null)
+    public function setDatetime(string $datetime = null)
     {
-        $this->start = $start;
-        return $this;
-    }
-
-    /**
-     * @returns string
-     */
-    public function getEnd()     {
-        return $this->end;
-    }
-
-    /**
-     * @returns SessionsModel
-     */
-    public function setEnd(string $end = null)
-    {
-        $this->end = $end;
+        $this->datetime = $datetime;
         return $this;
     }
 
@@ -118,15 +100,52 @@ abstract class BaseSessionsModel
     /*****************************************************
      * "Referenced To" Remote Constraint Object Fetchers *
      *****************************************************/
+    /**
+     * @returns Models\UsersModel
+     */
+    public function fetchUserObject() : Models\UsersModel
+    {
+        /** @var $UsersService Services\UsersService */
+        $UsersService = App::Container()->get(Services\UsersService::class);
+        return $UsersService->getById($this->getUser_id());
+    }
+
+
+    /*****************************************************
+     * "Referenced By" Remote Constraint Object Fetchers *
+     *****************************************************/
+    /**
+     * @returns Models\CauseOrgasmLinkModel
+     */
+    public function fetchCauseOrgasmLinkObject(
+        $orderBy = null,
+        $orderDirection='ASC'
+    ) : Models\CauseOrgasmLinkModel {
+        /** @var $causeOrgasmLinkService Services\CauseOrgasmLinkService */
+        $causeOrgasmLinkService = App::Container()->get(Services\CauseOrgasmLinkService::class);
+        return $causeOrgasmLinkService->getByField('orgasm_id', $this->getId(), $orderBy, $orderDirection);
+    }
+
+    /**
+     * @returns Models\CauseOrgasmLinkModel[]
+     */
+    public function fetchCauseOrgasmLinkObjects(
+        $orderBy = null,
+        $orderDirection='ASC'
+    ) : array {
+        /** @var $causeOrgasmLinkService Services\CauseOrgasmLinkService */
+        $causeOrgasmLinkService = App::Container()->get(Services\CauseOrgasmLinkService::class);
+        return $causeOrgasmLinkService->getManyByField('orgasm_id', $this->getId(), $orderBy, $orderDirection);
+    }
 
 
     /**
-     * @returns SessionsModel
+     * @returns OrgasmsModel
      */
     public function save()
     {
-        /** @var $tableGateway TableGateways\SessionsTableGateway */
-        $tableGateway = App::Container()->get(TableGateways\SessionsTableGateway::class);
+        /** @var $tableGateway TableGateways\OrgasmsTableGateway */
+        $tableGateway = App::Container()->get(TableGateways\OrgasmsTableGateway::class);
         return $tableGateway->save($this);
     }
 
@@ -137,8 +156,8 @@ abstract class BaseSessionsModel
      */
     public function destroy()
     {
-        /** @var $tableGateway TableGateways\SessionsTableGateway */
-        $tableGateway = App::Container()->get(TableGateways\SessionsTableGateway::class);
+        /** @var $tableGateway TableGateways\OrgasmsTableGateway */
+        $tableGateway = App::Container()->get(TableGateways\OrgasmsTableGateway::class);
         return $tableGateway->delete($this->getPrimaryKeys());
     }
 
@@ -151,8 +170,7 @@ abstract class BaseSessionsModel
         return [
             'id',
             'user_id',
-            'start',
-            'end',
+            'datetime',
         ];
     }
 }

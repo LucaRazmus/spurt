@@ -10,15 +10,11 @@ services:
       - MYSQL_DATABASE=spurt
 
   phpmyadmin:
-    image: corbinu/docker-phpmyadmin:latest
+    image: phpmyadmin/phpmyadmin:latest
     environment:
-     - VIRTUAL_HOST=mysql.spurt.dev
-     - MYSQL_PORT_3306_TCP_ADDR=mysql
-     - MYSQL_PORT_3306_TCP_PORT=3306
+     - PMA_HOST=mysql
      - MYSQL_ROOT_PASSWORD=w5X4Hyi1NOF502y
-     - MYSQL_USER=spurt
-     - MYSQL_PASSWORD=nrYv7L1v5Nv5f6D
-     - MYSQL_DATABASE=spurt
+     - VIRTUAL_HOST=mysql.spurt.dev
     links:
      - mysql
 

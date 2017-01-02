@@ -33,18 +33,14 @@ class SessionsTest extends \Segura\AppCore\Test\BaseTestCase
     {
         $data = [];
         $data['id'] = self::getFaker()->randomDigitNotNull;
-        $data['uuid'] = self::getFaker()->word;
-        $data['userId'] = self::getFaker()->randomDigitNotNull;
-        $data['key'] = self::getFaker()->word;
-        $data['created'] = self::getFaker()->word;
-        $data['expires'] = self::getFaker()->word;
+        $data['user_id'] = self::getFaker()->randomDigitNotNull;
+        $data['start'] = self::getFaker()->word;
+        $data['end'] = self::getFaker()->word;
         $this->testInstance = new SessionsModel($data);
         $this->assertEquals($data['id'], $this->testInstance->getId());
-        $this->assertEquals($data['uuid'], $this->testInstance->getUuid());
-        $this->assertEquals($data['userId'], $this->testInstance->getUserId());
-        $this->assertEquals($data['key'], $this->testInstance->getKey());
-        $this->assertEquals($data['created'], $this->testInstance->getCreated());
-        $this->assertEquals($data['expires'], $this->testInstance->getExpires());
+        $this->assertEquals($data['user_id'], $this->testInstance->getUser_id());
+        $this->assertEquals($data['start'], $this->testInstance->getStart());
+        $this->assertEquals($data['end'], $this->testInstance->getEnd());
     }
 
     public function testGetRandom()
@@ -126,36 +122,26 @@ class SessionsTest extends \Segura\AppCore\Test\BaseTestCase
     {
         $this->assertTrue(method_exists($sessions, "getid"));
         $this->assertTrue(method_exists($sessions, "setid"));
-        $this->assertTrue(method_exists($sessions, "getuuid"));
-        $this->assertTrue(method_exists($sessions, "setuuid"));
-        $this->assertTrue(method_exists($sessions, "getuserId"));
-        $this->assertTrue(method_exists($sessions, "setuserId"));
-        $this->assertTrue(method_exists($sessions, "getkey"));
-        $this->assertTrue(method_exists($sessions, "setkey"));
-        $this->assertTrue(method_exists($sessions, "getcreated"));
-        $this->assertTrue(method_exists($sessions, "setcreated"));
-        $this->assertTrue(method_exists($sessions, "getexpires"));
-        $this->assertTrue(method_exists($sessions, "setexpires"));
+        $this->assertTrue(method_exists($sessions, "getuser_id"));
+        $this->assertTrue(method_exists($sessions, "setuser_id"));
+        $this->assertTrue(method_exists($sessions, "getstart"));
+        $this->assertTrue(method_exists($sessions, "setstart"));
+        $this->assertTrue(method_exists($sessions, "getend"));
+        $this->assertTrue(method_exists($sessions, "setend"));
 
         $testSessions = new SessionsModel();
         $input = self::getFaker()->randomDigitNotNull;
         $testSessions->setid($input);
         $this->assertEquals($input, $testSessions->getid());
-        $input = self::getFaker()->word;
-        $testSessions->setuuid($input);
-        $this->assertEquals($input, $testSessions->getuuid());
         $input = self::getFaker()->randomDigitNotNull;
-        $testSessions->setuserId($input);
-        $this->assertEquals($input, $testSessions->getuserId());
+        $testSessions->setuser_id($input);
+        $this->assertEquals($input, $testSessions->getuser_id());
         $input = self::getFaker()->word;
-        $testSessions->setkey($input);
-        $this->assertEquals($input, $testSessions->getkey());
+        $testSessions->setstart($input);
+        $this->assertEquals($input, $testSessions->getstart());
         $input = self::getFaker()->word;
-        $testSessions->setcreated($input);
-        $this->assertEquals($input, $testSessions->getcreated());
-        $input = self::getFaker()->word;
-        $testSessions->setexpires($input);
-        $this->assertEquals($input, $testSessions->getexpires());
+        $testSessions->setend($input);
+        $this->assertEquals($input, $testSessions->getend());
     }
 
 

@@ -22,13 +22,13 @@ use \Zend\Db\ResultSet\ResultSet;
  * extends this, or modify the Zenderator Template!     *
  ********************************************************/
 // @todo: Make all TableGateways implement a TableGatewayInterface. -MB
-abstract class BaseCharactersTableGateway extends AbstractTableGateway
+abstract class BaseOrgasmsTableGateway extends AbstractTableGateway
 {
-    protected $table = 'characters';
+    protected $table = 'orgasms';
 
     protected $database = 'Default';
 
-    protected $model = 'Spurt\Models\CharactersModel';
+    protected $model = 'Spurt\Models\OrgasmsModel';
 
     /** @var \Faker\Generator */
     protected $faker;
@@ -65,38 +65,30 @@ abstract class BaseCharactersTableGateway extends AbstractTableGateway
     }
 
     /**
-     * @return Models\CharactersModel
+     * @return Models\OrgasmsModel
      */
     public function getNewMockModelInstance()
     {
 
-      $newCharactersData = [
-        // dateCreated. Type = datetime. PHPType = string. Has no related objects.
-        'dateCreated' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
-        // dateLastSeen. Type = datetime. PHPType = string. Has no related objects.
-        'dateLastSeen' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
-        // description. Type = text. PHPType = string. Has no related objects.
-        'description' => substr($this->faker->text(500 >= 5 ? 500 : 5), 0, 500),
+      $newOrgasmsData = [
+        // datetime. Type = datetime. PHPType = string. Has no related objects.
+        'datetime' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
         // id. Type = int. PHPType = int. Has no related objects.
         'id' => null,
-        // name. Type = varchar. PHPType = string. Has no related objects.
-        'name' => substr($this->faker->text(320 >= 5 ? 320 : 5), 0, 320),
-        // userId. Type = int. PHPType = int. Has related objects.
-        'userId' =>
+        // user_id. Type = int. PHPType = int. Has related objects.
+        'user_id' =>
             $this->usersTableGateway->fetchRandom() instanceof Models\UsersModel
             ? $this->usersTableGateway->fetchRandom()->getId()
             : $this->usersTableGateway->getNewMockModelInstance()->save()->getId(),
 
-        // uuid. Type = varchar. PHPType = string. Has no related objects.
-        'uuid' => substr($this->faker->text(36 >= 5 ? 36 : 5), 0, 36),
       ];
-      $newCharacters = $this->getNewModelInstance($newCharactersData);
-      return $newCharacters;
+      $newOrgasms = $this->getNewModelInstance($newOrgasmsData);
+      return $newOrgasms;
     }
 
     /**
      * @param array $data
-     * @return Models\CharactersModel
+     * @return Models\OrgasmsModel
      */
     public function getNewModelInstance(array $data = [])
     {
@@ -104,8 +96,8 @@ abstract class BaseCharactersTableGateway extends AbstractTableGateway
     }
 
     /**
-     * @param Models\CharactersModel $model
-     * @return Models\CharactersModel
+     * @param Models\OrgasmsModel $model
+     * @return Models\OrgasmsModel
      */
     public function save(Model $model)
     {

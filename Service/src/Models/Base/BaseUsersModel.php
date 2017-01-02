@@ -27,18 +27,26 @@ abstract class BaseUsersModel
     implements ModelInterface
 {
 
+    // Declare what fields are available on this object
+    const FIELD_ID = 'id';
+    const FIELD_USERNAME = 'username';
+    const FIELD_EMAIL = 'email';
+    const FIELD_PASSWORD = 'password';
+    const FIELD_DATAISPRIVATE = 'dataIsPrivate';
+    const FIELD_CREATEDDATE = 'createdDate';
+    const FIELD_LASTUPDATEDDATE = 'lastUpdatedDate';
+
     protected $_primary_keys = ['id'];
 
     protected $_autoincrement_keys = ['id'];
 
     protected $id;
-    protected $uuid;
     protected $username;
     protected $email;
     protected $password;
-    protected $dateCreated;
-    protected $dateLastSeen;
-    protected $state;
+    protected $dataIsPrivate;
+    protected $createdDate;
+    protected $lastUpdatedDate;
 
     /**
      * @returns UsersModel
@@ -61,22 +69,6 @@ abstract class BaseUsersModel
     public function setId(int $id = null)
     {
         $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @returns string
-     */
-    public function getUuid()     {
-        return $this->uuid;
-    }
-
-    /**
-     * @returns UsersModel
-     */
-    public function setUuid(string $uuid = null)
-    {
-        $this->uuid = $uuid;
         return $this;
     }
 
@@ -131,48 +123,48 @@ abstract class BaseUsersModel
     /**
      * @returns string
      */
-    public function getDateCreated()     {
-        return $this->dateCreated;
+    public function getDataIsPrivate()     {
+        return $this->dataIsPrivate;
     }
 
     /**
      * @returns UsersModel
      */
-    public function setDateCreated(string $dateCreated = null)
+    public function setDataIsPrivate(string $dataIsPrivate = null)
     {
-        $this->dateCreated = $dateCreated;
+        $this->dataIsPrivate = $dataIsPrivate;
         return $this;
     }
 
     /**
      * @returns string
      */
-    public function getDateLastSeen()     {
-        return $this->dateLastSeen;
+    public function getCreatedDate()     {
+        return $this->createdDate;
     }
 
     /**
      * @returns UsersModel
      */
-    public function setDateLastSeen(string $dateLastSeen = null)
+    public function setCreatedDate(string $createdDate = null)
     {
-        $this->dateLastSeen = $dateLastSeen;
+        $this->createdDate = $createdDate;
         return $this;
     }
 
     /**
      * @returns string
      */
-    public function getState()     {
-        return $this->state;
+    public function getLastUpdatedDate()     {
+        return $this->lastUpdatedDate;
     }
 
     /**
      * @returns UsersModel
      */
-    public function setState(string $state = null)
+    public function setLastUpdatedDate(string $lastUpdatedDate = null)
     {
-        $this->state = $state;
+        $this->lastUpdatedDate = $lastUpdatedDate;
         return $this;
     }
 
@@ -185,39 +177,27 @@ abstract class BaseUsersModel
      * "Referenced By" Remote Constraint Object Fetchers *
      *****************************************************/
     /**
-     * @returns Models\CharactersModel
+     * @returns Models\OrgasmsModel
      */
-    public function fetchCharacterObject() : Models\CharactersModel {
-        /** @var $charactersService Services\CharactersService */
-        $charactersService = App::Container()->get(Services\CharactersService::class);
-        return $charactersService->getByField('userId', $this->getId());
+    public function fetchOrgasmObject(
+        $orderBy = null,
+        $orderDirection='ASC'
+    ) : Models\OrgasmsModel {
+        /** @var $orgasmsService Services\OrgasmsService */
+        $orgasmsService = App::Container()->get(Services\OrgasmsService::class);
+        return $orgasmsService->getByField('user_id', $this->getId(), $orderBy, $orderDirection);
     }
 
     /**
-     * @returns Models\CharactersModel[]
+     * @returns Models\OrgasmsModel[]
      */
-    public function fetchCharacterObjects() : array {
-        /** @var $charactersService Services\CharactersService */
-        $charactersService = App::Container()->get(Services\CharactersService::class);
-        return $charactersService->getManyByField('userId', $this->getId());
-    }
-
-    /**
-     * @returns Models\SessionsModel
-     */
-    public function fetchSessionObject() : Models\SessionsModel {
-        /** @var $sessionsService Services\SessionsService */
-        $sessionsService = App::Container()->get(Services\SessionsService::class);
-        return $sessionsService->getByField('userId', $this->getId());
-    }
-
-    /**
-     * @returns Models\SessionsModel[]
-     */
-    public function fetchSessionObjects() : array {
-        /** @var $sessionsService Services\SessionsService */
-        $sessionsService = App::Container()->get(Services\SessionsService::class);
-        return $sessionsService->getManyByField('userId', $this->getId());
+    public function fetchOrgasmObjects(
+        $orderBy = null,
+        $orderDirection='ASC'
+    ) : array {
+        /** @var $orgasmsService Services\OrgasmsService */
+        $orgasmsService = App::Container()->get(Services\OrgasmsService::class);
+        return $orgasmsService->getManyByField('user_id', $this->getId(), $orderBy, $orderDirection);
     }
 
 
@@ -251,13 +231,12 @@ abstract class BaseUsersModel
     {
         return [
             'id',
-            'uuid',
             'username',
             'email',
             'password',
-            'dateCreated',
-            'dateLastSeen',
-            'state',
+            'dataIsPrivate',
+            'createdDate',
+            'lastUpdatedDate',
         ];
     }
 }

@@ -22,13 +22,13 @@ use \Zend\Db\ResultSet\ResultSet;
  * extends this, or modify the Zenderator Template!     *
  ********************************************************/
 // @todo: Make all TableGateways implement a TableGatewayInterface. -MB
-abstract class BaseMessagesTableGateway extends AbstractTableGateway
+abstract class BaseCauseOrgasmLinkTableGateway extends AbstractTableGateway
 {
-    protected $table = 'messages';
+    protected $table = 'causeOrgasmLink';
 
     protected $database = 'Default';
 
-    protected $model = 'Spurt\Models\MessagesModel';
+    protected $model = 'Spurt\Models\CauseOrgasmLinkModel';
 
     /** @var \Faker\Generator */
     protected $faker;
@@ -38,22 +38,27 @@ abstract class BaseMessagesTableGateway extends AbstractTableGateway
 
     private $databaseAdaptor;
 
-    /** @var TableGateways\CharactersTableGateway */
-    protected $charactersTableGateway;
+    /** @var TableGateways\CausesTableGateway */
+    protected $causesTableGateway;
+    /** @var TableGateways\OrgasmsTableGateway */
+    protected $orgasmsTableGateway;
 
     /**
      * AbstractTableGateway constructor.
      *
-     * @param TableGateways\CharactersTableGateway $charactersTableGateway,
+     * @param TableGateways\CausesTableGateway $causesTableGateway,
+     * @param TableGateways\OrgasmsTableGateway $orgasmsTableGateway,
      * @param Db $databaseConnector
      */
     public function __construct(
-        TableGateways\CharactersTableGateway $charactersTableGateway,
+        TableGateways\CausesTableGateway $causesTableGateway,
+        TableGateways\OrgasmsTableGateway $orgasmsTableGateway,
         \Faker\Generator $faker,
         Db $databaseConnector
     )
     {
-        $this->charactersTableGateway = $charactersTableGateway;
+        $this->causesTableGateway = $causesTableGateway;
+        $this->orgasmsTableGateway = $orgasmsTableGateway;
         $this->faker = $faker;
         $this->databaseConnector = $databaseConnector;
 
@@ -65,42 +70,34 @@ abstract class BaseMessagesTableGateway extends AbstractTableGateway
     }
 
     /**
-     * @return Models\MessagesModel
+     * @return Models\CauseOrgasmLinkModel
      */
     public function getNewMockModelInstance()
     {
 
-      $newMessagesData = [
-        // characterFromId. Type = int. PHPType = int. Has related objects.
-        'characterFromId' =>
-            $this->charactersTableGateway->fetchRandom() instanceof Models\CharactersModel
-            ? $this->charactersTableGateway->fetchRandom()->getId()
-            : $this->charactersTableGateway->getNewMockModelInstance()->save()->getId(),
+      $newCauseOrgasmLinkData = [
+        // cause_id. Type = int. PHPType = int. Has related objects.
+        'cause_id' =>
+            $this->causesTableGateway->fetchRandom() instanceof Models\CausesModel
+            ? $this->causesTableGateway->fetchRandom()->getId()
+            : $this->causesTableGateway->getNewMockModelInstance()->save()->getId(),
 
-        // characterToId. Type = int. PHPType = int. Has related objects.
-        'characterToId' =>
-            $this->charactersTableGateway->fetchRandom() instanceof Models\CharactersModel
-            ? $this->charactersTableGateway->fetchRandom()->getId()
-            : $this->charactersTableGateway->getNewMockModelInstance()->save()->getId(),
-
-        // dateCreated. Type = datetime. PHPType = string. Has no related objects.
-        'dateCreated' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
-        // dateRead. Type = datetime. PHPType = string. Has no related objects.
-        'dateRead' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
         // id. Type = int. PHPType = int. Has no related objects.
         'id' => null,
-        // message. Type = text. PHPType = string. Has no related objects.
-        'message' => substr($this->faker->text(500 >= 5 ? 500 : 5), 0, 500),
-        // uuid. Type = varchar. PHPType = string. Has no related objects.
-        'uuid' => substr($this->faker->text(36 >= 5 ? 36 : 5), 0, 36),
+        // orgasm_id. Type = int. PHPType = int. Has related objects.
+        'orgasm_id' =>
+            $this->orgasmsTableGateway->fetchRandom() instanceof Models\OrgasmsModel
+            ? $this->orgasmsTableGateway->fetchRandom()->getId()
+            : $this->orgasmsTableGateway->getNewMockModelInstance()->save()->getId(),
+
       ];
-      $newMessages = $this->getNewModelInstance($newMessagesData);
-      return $newMessages;
+      $newCauseOrgasmLink = $this->getNewModelInstance($newCauseOrgasmLinkData);
+      return $newCauseOrgasmLink;
     }
 
     /**
      * @param array $data
-     * @return Models\MessagesModel
+     * @return Models\CauseOrgasmLinkModel
      */
     public function getNewModelInstance(array $data = [])
     {
@@ -108,8 +105,8 @@ abstract class BaseMessagesTableGateway extends AbstractTableGateway
     }
 
     /**
-     * @param Models\MessagesModel $model
-     * @return Models\MessagesModel
+     * @param Models\CauseOrgasmLinkModel $model
+     * @return Models\CauseOrgasmLinkModel
      */
     public function save(Model $model)
     {

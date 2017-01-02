@@ -22,13 +22,13 @@ use \Zend\Db\ResultSet\ResultSet;
  * extends this, or modify the Zenderator Template!     *
  ********************************************************/
 // @todo: Make all TableGateways implement a TableGatewayInterface. -MB
-abstract class BaseUsersTableGateway extends AbstractTableGateway
+abstract class BaseCausesTableGateway extends AbstractTableGateway
 {
-    protected $table = 'users';
+    protected $table = 'causes';
 
     protected $database = 'Default';
 
-    protected $model = 'Spurt\Models\UsersModel';
+    protected $model = 'Spurt\Models\CausesModel';
 
     /** @var \Faker\Generator */
     protected $faker;
@@ -60,34 +60,24 @@ abstract class BaseUsersTableGateway extends AbstractTableGateway
     }
 
     /**
-     * @return Models\UsersModel
+     * @return Models\CausesModel
      */
     public function getNewMockModelInstance()
     {
 
-      $newUsersData = [
-        // createdDate. Type = datetime. PHPType = string. Has no related objects.
-        'createdDate' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
-        // dataIsPrivate. Type = enum. PHPType = string. Has no related objects.
-        'dataIsPrivate' => 'Yes',
-        // email. Type = varchar. PHPType = string. Has no related objects.
-        'email' => substr($this->faker->text(320 >= 5 ? 320 : 5), 0, 320),
+      $newCausesData = [
         // id. Type = int. PHPType = int. Has no related objects.
         'id' => null,
-        // lastUpdatedDate. Type = datetime. PHPType = string. Has no related objects.
-        'lastUpdatedDate' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
-        // password. Type = text. PHPType = string. Has no related objects.
-        'password' => substr($this->faker->text(500 >= 5 ? 500 : 5), 0, 500),
-        // username. Type = varchar. PHPType = string. Has no related objects.
-        'username' => substr($this->faker->text(40 >= 5 ? 40 : 5), 0, 40),
+        // name. Type = varchar. PHPType = string. Has no related objects.
+        'name' => substr($this->faker->text(320 >= 5 ? 320 : 5), 0, 320),
       ];
-      $newUsers = $this->getNewModelInstance($newUsersData);
-      return $newUsers;
+      $newCauses = $this->getNewModelInstance($newCausesData);
+      return $newCauses;
     }
 
     /**
      * @param array $data
-     * @return Models\UsersModel
+     * @return Models\CausesModel
      */
     public function getNewModelInstance(array $data = [])
     {
@@ -95,8 +85,8 @@ abstract class BaseUsersTableGateway extends AbstractTableGateway
     }
 
     /**
-     * @param Models\UsersModel $model
-     * @return Models\UsersModel
+     * @param Models\CausesModel $model
+     * @return Models\CausesModel
      */
     public function save(Model $model)
     {

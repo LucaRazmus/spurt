@@ -63,27 +63,17 @@ class SessionsTest extends \Segura\AppCore\Test\BaseTestCase
             'Spurt\Models\SessionsModel',
             get_class($found)
         );
-        $found = $sessionsService->getByField('uuid', $random->getuuid());
+        $found = $sessionsService->getByField('user_id', $random->getuser_id());
         $this->assertEquals(
             'Spurt\Models\SessionsModel',
             get_class($found)
         );
-        $found = $sessionsService->getByField('userId', $random->getuserId());
+        $found = $sessionsService->getByField('start', $random->getstart());
         $this->assertEquals(
             'Spurt\Models\SessionsModel',
             get_class($found)
         );
-        $found = $sessionsService->getByField('key', $random->getkey());
-        $this->assertEquals(
-            'Spurt\Models\SessionsModel',
-            get_class($found)
-        );
-        $found = $sessionsService->getByField('created', $random->getcreated());
-        $this->assertEquals(
-            'Spurt\Models\SessionsModel',
-            get_class($found)
-        );
-        $found = $sessionsService->getByField('expires', $random->getexpires());
+        $found = $sessionsService->getByField('end', $random->getend());
         $this->assertEquals(
             'Spurt\Models\SessionsModel',
             get_class($found)

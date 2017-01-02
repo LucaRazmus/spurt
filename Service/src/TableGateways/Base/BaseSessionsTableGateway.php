@@ -38,22 +38,17 @@ abstract class BaseSessionsTableGateway extends AbstractTableGateway
 
     private $databaseAdaptor;
 
-    /** @var TableGateways\UsersTableGateway */
-    protected $usersTableGateway;
 
     /**
      * AbstractTableGateway constructor.
      *
-     * @param TableGateways\UsersTableGateway $usersTableGateway,
      * @param Db $databaseConnector
      */
     public function __construct(
-        TableGateways\UsersTableGateway $usersTableGateway,
         \Faker\Generator $faker,
         Db $databaseConnector
     )
     {
-        $this->usersTableGateway = $usersTableGateway;
         $this->faker = $faker;
         $this->databaseConnector = $databaseConnector;
 
@@ -71,22 +66,14 @@ abstract class BaseSessionsTableGateway extends AbstractTableGateway
     {
 
       $newSessionsData = [
-        // created. Type = datetime. PHPType = string. Has no related objects.
-        'created' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
-        // expires. Type = datetime. PHPType = string. Has no related objects.
-        'expires' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
+        // end. Type = datetime. PHPType = string. Has no related objects.
+        'end' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
         // id. Type = int. PHPType = int. Has no related objects.
         'id' => null,
-        // key. Type = varchar. PHPType = string. Has no related objects.
-        'key' => substr($this->faker->text(36 >= 5 ? 36 : 5), 0, 36),
-        // userId. Type = int. PHPType = int. Has related objects.
-        'userId' =>
-            $this->usersTableGateway->fetchRandom() instanceof Models\UsersModel
-            ? $this->usersTableGateway->fetchRandom()->getId()
-            : $this->usersTableGateway->getNewMockModelInstance()->save()->getId(),
-
-        // uuid. Type = varchar. PHPType = string. Has no related objects.
-        'uuid' => substr($this->faker->text(36 >= 5 ? 36 : 5), 0, 36),
+        // start. Type = datetime. PHPType = string. Has no related objects.
+        'start' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
+        // user_id. Type = int. PHPType = int. Has no related objects.
+        'user_id' => $this->faker->numberBetween(1, 100000000),
       ];
       $newSessions = $this->getNewModelInstance($newSessionsData);
       return $newSessions;

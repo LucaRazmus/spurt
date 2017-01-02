@@ -22,44 +22,39 @@ use Zend\Db\Sql\Select;
  * extends this, or modify the Zenderator Template!     *
  ********************************************************/
 // @todo: Make all Services implement a ServicesInterface. - MB
-abstract class BaseMessagesService
+abstract class BaseCausesService
     extends AbstractService
     implements ServiceInterface
 {
 
     // Related Objects Table Gateways
-    /** @var TableGateways\CharactersTableGateway */
-    protected $charactersTableGateway;
 
     // Remote Constraints Table Gateways
 
     // Self Table Gateway
-    /** @var TableGateways\MessagesTableGateway */
-    protected $messagesTableGateway;
+    /** @var TableGateways\CausesTableGateway */
+    protected $causesTableGateway;
 
     /**
      * Constructor.
      *
-     * @param TableGateways\CharactersTableGateway $charactersTableGateway
-     * @param TableGateways\MessagesTableGateway $messagesTableGateway
+     * @param TableGateways\CausesTableGateway $causesTableGateway
      */
     public function __construct(
-        TableGateways\CharactersTableGateway $charactersTableGateway,
-        TableGateways\MessagesTableGateway $messagesTableGateway
+        TableGateways\CausesTableGateway $causesTableGateway
     )
     {
-        $this->charactersTableGateway = $charactersTableGateway;
-        $this->messagesTableGateway = $messagesTableGateway;
+        $this->causesTableGateway = $causesTableGateway;
     }
 
-    public function getNewTableGatewayInstance() : TableGateways\MessagesTableGateway
+    public function getNewTableGatewayInstance() : TableGateways\CausesTableGateway
     {
-        return $this->messagesTableGateway;
+        return $this->causesTableGateway;
     }
     
-    public function getNewModelInstance($dataExchange = []) : Models\MessagesModel
+    public function getNewModelInstance($dataExchange = []) : Models\CausesModel
     {
-        return $this->messagesTableGateway->getNewModelInstance($dataExchange);
+        return $this->causesTableGateway->getNewModelInstance($dataExchange);
     }
 
     /**
@@ -68,7 +63,7 @@ abstract class BaseMessagesService
      * @param array|null $wheres
      * @param string|null $order
      * @param string|null $orderDirection
-     * @return Models\MessagesModel[]
+     * @return Models\CausesModel[]
      */
     public function getAll(
         int $limit = null,
@@ -79,8 +74,8 @@ abstract class BaseMessagesService
     )
     {
 
-        $messagesTable = $this->getNewTableGatewayInstance();
-        list($allMessagess, $count) = $messagesTable->fetchAll(
+        $causesTable = $this->getNewTableGatewayInstance();
+        list($allCausess, $count) = $causesTable->fetchAll(
             $limit,
             $offset,
             $wheres,
@@ -89,9 +84,9 @@ abstract class BaseMessagesService
         );
         $return = [];
 
-        if ($allMessagess instanceof ResultSet) {
-            foreach ($allMessagess as $messages) {
-                $return[] = $messages;
+        if ($allCausess instanceof ResultSet) {
+            foreach ($allCausess as $causes) {
+                $return[] = $causes;
             }
         }
         return $return;
@@ -99,51 +94,55 @@ abstract class BaseMessagesService
 
     /**
      * @param int $id
-     * @return Models\MessagesModel
+     * @return Models\CausesModel
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getById(int $id) : Models\MessagesModel
+    public function getById(int $id) : Models\CausesModel
     {
-        /** @var TableGateways\MessagesTableGateway $messagesTable */
-        $messagesTable = $this->getNewTableGatewayInstance();
-        return $messagesTable->getById($id);
+        /** @var TableGateways\CausesTableGateway $causesTable */
+        $causesTable = $this->getNewTableGatewayInstance();
+        return $causesTable->getById($id);
     }
 
     /**
      * @param string $field
      * @param $value
-     * @return Models\MessagesModel
+     * @param $orderBy string Field to sort by
+     * @param $orderDirection string Direction to sort (Select::ORDER_ASCENDING || Select::ORDER_DESCENDING)
+     * @return Models\CausesModel
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getByField(string $field, $value) : Models\MessagesModel
+    public function getByField(string $field, $value, $orderBy = null, $orderDirection = Select::ORDER_ASCENDING) : Models\CausesModel
     {
-        /** @var TableGateways\MessagesTableGateway $messagesTable */
-        $messagesTable = $this->getNewTableGatewayInstance();
-        return $messagesTable->getByField($field, $value);
+        /** @var TableGateways\CausesTableGateway $causesTable */
+        $causesTable = $this->getNewTableGatewayInstance();
+        return $causesTable->getByField($field, $value, $orderBy, $orderDirection);
     }
 
     /**
      * @param string $field
      * @param $value
-     * @return Models\MessagesModel[]
+     * @param $orderBy string Field to sort by
+     * @param $orderDirection string Direction to sort (Select::ORDER_ASCENDING || Select::ORDER_DESCENDING)
+     * @return Models\CausesModel[]
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getManyByField(string $field, $value) : array
+    public function getManyByField(string $field, $value, $orderBy = null, $orderDirection = Select::ORDER_ASCENDING) : array
     {
-        /** @var TableGateways\MessagesTableGateway $messagesTable */
-        $messagesTable = $this->getNewTableGatewayInstance();
-        return $messagesTable->getManyByField($field, $value);
+        /** @var TableGateways\CausesTableGateway $causesTable */
+        $causesTable = $this->getNewTableGatewayInstance();
+        return $causesTable->getManyByField($field, $value, $orderBy, $orderDirection);
     }
 
     /**
-     * @return Models\MessagesModel
+     * @return Models\CausesModel
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getRandom() : Models\MessagesModel
+    public function getRandom() : Models\CausesModel
     {
-        /** @var TableGateways\MessagesTableGateway $messagesTable */
-        $messagesTable = $this->getNewTableGatewayInstance();
-        return $messagesTable->fetchRandom();
+        /** @var TableGateways\CausesTableGateway $causesTable */
+        $causesTable = $this->getNewTableGatewayInstance();
+        return $causesTable->fetchRandom();
     }
 
     /**
@@ -152,10 +151,10 @@ abstract class BaseMessagesService
      */
     public function createFromArray($dataExchange)
     {
-        /** @var TableGateways\MessagesTableGateway $messagesTable */
-        $messagesTable = $this->getNewTableGatewayInstance();
-        $messages = $this->getNewModelInstance($dataExchange);
-        return $messagesTable->save($messages);
+        /** @var TableGateways\CausesTableGateway $causesTable */
+        $causesTable = $this->getNewTableGatewayInstance();
+        $causes = $this->getNewModelInstance($dataExchange);
+        return $causesTable->save($causes);
     }
 
     /**
@@ -164,23 +163,23 @@ abstract class BaseMessagesService
      */
     public function deleteByID($id) : int
     {
-        /** @var TableGateways\MessagesTableGateway $messagesTable */
-        $messagesTable = $this->getNewTableGatewayInstance();
-        return $messagesTable->delete(['id' => $id]);
+        /** @var TableGateways\CausesTableGateway $causesTable */
+        $causesTable = $this->getNewTableGatewayInstance();
+        return $causesTable->delete(['id' => $id]);
     }
 
     public function getTermPlural() : string
     {
-        return 'Messages';
+        return 'Causes';
     }
 
     public function getTermSingular() : string
     {
-        return 'Messages';
+        return 'Causes';
     }
 
     /**
-     * @returns Models\MessagesModel
+     * @returns Models\CausesModel
      */
     public function getMockObject()
     {

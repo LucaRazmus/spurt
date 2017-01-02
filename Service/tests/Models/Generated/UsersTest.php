@@ -33,22 +33,20 @@ class UsersTest extends \Segura\AppCore\Test\BaseTestCase
     {
         $data = [];
         $data['id'] = self::getFaker()->randomDigitNotNull;
-        $data['uuid'] = self::getFaker()->word;
         $data['username'] = self::getFaker()->word;
         $data['email'] = self::getFaker()->word;
         $data['password'] = self::getFaker()->word;
-        $data['dateCreated'] = self::getFaker()->word;
-        $data['dateLastSeen'] = self::getFaker()->word;
-        $data['state'] = self::getFaker()->word;
+        $data['dataIsPrivate'] = self::getFaker()->word;
+        $data['createdDate'] = self::getFaker()->word;
+        $data['lastUpdatedDate'] = self::getFaker()->word;
         $this->testInstance = new UsersModel($data);
         $this->assertEquals($data['id'], $this->testInstance->getId());
-        $this->assertEquals($data['uuid'], $this->testInstance->getUuid());
         $this->assertEquals($data['username'], $this->testInstance->getUsername());
         $this->assertEquals($data['email'], $this->testInstance->getEmail());
         $this->assertEquals($data['password'], $this->testInstance->getPassword());
-        $this->assertEquals($data['dateCreated'], $this->testInstance->getDateCreated());
-        $this->assertEquals($data['dateLastSeen'], $this->testInstance->getDateLastSeen());
-        $this->assertEquals($data['state'], $this->testInstance->getState());
+        $this->assertEquals($data['dataIsPrivate'], $this->testInstance->getDataIsPrivate());
+        $this->assertEquals($data['createdDate'], $this->testInstance->getCreatedDate());
+        $this->assertEquals($data['lastUpdatedDate'], $this->testInstance->getLastUpdatedDate());
     }
 
     public function testGetRandom()
@@ -130,28 +128,23 @@ class UsersTest extends \Segura\AppCore\Test\BaseTestCase
     {
         $this->assertTrue(method_exists($users, "getid"));
         $this->assertTrue(method_exists($users, "setid"));
-        $this->assertTrue(method_exists($users, "getuuid"));
-        $this->assertTrue(method_exists($users, "setuuid"));
         $this->assertTrue(method_exists($users, "getusername"));
         $this->assertTrue(method_exists($users, "setusername"));
         $this->assertTrue(method_exists($users, "getemail"));
         $this->assertTrue(method_exists($users, "setemail"));
         $this->assertTrue(method_exists($users, "getpassword"));
         $this->assertTrue(method_exists($users, "setpassword"));
-        $this->assertTrue(method_exists($users, "getdateCreated"));
-        $this->assertTrue(method_exists($users, "setdateCreated"));
-        $this->assertTrue(method_exists($users, "getdateLastSeen"));
-        $this->assertTrue(method_exists($users, "setdateLastSeen"));
-        $this->assertTrue(method_exists($users, "getstate"));
-        $this->assertTrue(method_exists($users, "setstate"));
+        $this->assertTrue(method_exists($users, "getdataIsPrivate"));
+        $this->assertTrue(method_exists($users, "setdataIsPrivate"));
+        $this->assertTrue(method_exists($users, "getcreatedDate"));
+        $this->assertTrue(method_exists($users, "setcreatedDate"));
+        $this->assertTrue(method_exists($users, "getlastUpdatedDate"));
+        $this->assertTrue(method_exists($users, "setlastUpdatedDate"));
 
         $testUsers = new UsersModel();
         $input = self::getFaker()->randomDigitNotNull;
         $testUsers->setid($input);
         $this->assertEquals($input, $testUsers->getid());
-        $input = self::getFaker()->word;
-        $testUsers->setuuid($input);
-        $this->assertEquals($input, $testUsers->getuuid());
         $input = self::getFaker()->word;
         $testUsers->setusername($input);
         $this->assertEquals($input, $testUsers->getusername());
@@ -162,14 +155,14 @@ class UsersTest extends \Segura\AppCore\Test\BaseTestCase
         $testUsers->setpassword($input);
         $this->assertEquals($input, $testUsers->getpassword());
         $input = self::getFaker()->word;
-        $testUsers->setdateCreated($input);
-        $this->assertEquals($input, $testUsers->getdateCreated());
+        $testUsers->setdataIsPrivate($input);
+        $this->assertEquals($input, $testUsers->getdataIsPrivate());
         $input = self::getFaker()->word;
-        $testUsers->setdateLastSeen($input);
-        $this->assertEquals($input, $testUsers->getdateLastSeen());
+        $testUsers->setcreatedDate($input);
+        $this->assertEquals($input, $testUsers->getcreatedDate());
         $input = self::getFaker()->word;
-        $testUsers->setstate($input);
-        $this->assertEquals($input, $testUsers->getstate());
+        $testUsers->setlastUpdatedDate($input);
+        $this->assertEquals($input, $testUsers->getlastUpdatedDate());
     }
 
 

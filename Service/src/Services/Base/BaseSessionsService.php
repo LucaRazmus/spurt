@@ -28,8 +28,6 @@ abstract class BaseSessionsService
 {
 
     // Related Objects Table Gateways
-    /** @var TableGateways\UsersTableGateway */
-    protected $usersTableGateway;
 
     // Remote Constraints Table Gateways
 
@@ -40,15 +38,12 @@ abstract class BaseSessionsService
     /**
      * Constructor.
      *
-     * @param TableGateways\UsersTableGateway $usersTableGateway
      * @param TableGateways\SessionsTableGateway $sessionsTableGateway
      */
     public function __construct(
-        TableGateways\UsersTableGateway $usersTableGateway,
         TableGateways\SessionsTableGateway $sessionsTableGateway
     )
     {
-        $this->usersTableGateway = $usersTableGateway;
         $this->sessionsTableGateway = $sessionsTableGateway;
     }
 
@@ -112,27 +107,31 @@ abstract class BaseSessionsService
     /**
      * @param string $field
      * @param $value
+     * @param $orderBy string Field to sort by
+     * @param $orderDirection string Direction to sort (Select::ORDER_ASCENDING || Select::ORDER_DESCENDING)
      * @return Models\SessionsModel
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getByField(string $field, $value) : Models\SessionsModel
+    public function getByField(string $field, $value, $orderBy = null, $orderDirection = Select::ORDER_ASCENDING) : Models\SessionsModel
     {
         /** @var TableGateways\SessionsTableGateway $sessionsTable */
         $sessionsTable = $this->getNewTableGatewayInstance();
-        return $sessionsTable->getByField($field, $value);
+        return $sessionsTable->getByField($field, $value, $orderBy, $orderDirection);
     }
 
     /**
      * @param string $field
      * @param $value
+     * @param $orderBy string Field to sort by
+     * @param $orderDirection string Direction to sort (Select::ORDER_ASCENDING || Select::ORDER_DESCENDING)
      * @return Models\SessionsModel[]
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getManyByField(string $field, $value) : array
+    public function getManyByField(string $field, $value, $orderBy = null, $orderDirection = Select::ORDER_ASCENDING) : array
     {
         /** @var TableGateways\SessionsTableGateway $sessionsTable */
         $sessionsTable = $this->getNewTableGatewayInstance();
-        return $sessionsTable->getManyByField($field, $value);
+        return $sessionsTable->getManyByField($field, $value, $orderBy, $orderDirection);
     }
 
     /**

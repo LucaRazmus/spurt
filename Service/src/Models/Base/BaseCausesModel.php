@@ -7,7 +7,7 @@ use Segura\AppCore\Interfaces\ModelInterface as ModelInterface;
 use \Spurt\Services;
 use \Spurt\Models;
 use \Spurt\TableGateways;
-use \Spurt\Models\SessionsModel;
+use \Spurt\Models\CausesModel;
 
 /********************************************************
  *             ___                         __           *
@@ -22,28 +22,24 @@ use \Spurt\Models\SessionsModel;
  * this classes behaviours, do so in the class that     *
  * extends this, or modify the Zenderator Template!     *
  ********************************************************/
-abstract class BaseSessionsModel
+abstract class BaseCausesModel
     extends AbstractModel
     implements ModelInterface
 {
 
     // Declare what fields are available on this object
     const FIELD_ID = 'id';
-    const FIELD_USER_ID = 'user_id';
-    const FIELD_START = 'start';
-    const FIELD_END = 'end';
+    const FIELD_NAME = 'name';
 
     protected $_primary_keys = ['id'];
 
     protected $_autoincrement_keys = ['id'];
 
     protected $id;
-    protected $user_id;
-    protected $start;
-    protected $end;
+    protected $name;
 
     /**
-     * @returns SessionsModel
+     * @returns CausesModel
      */
     static public function factory()
     {
@@ -58,7 +54,7 @@ abstract class BaseSessionsModel
     }
 
     /**
-     * @returns SessionsModel
+     * @returns CausesModel
      */
     public function setId(int $id = null)
     {
@@ -67,50 +63,18 @@ abstract class BaseSessionsModel
     }
 
     /**
-     * @returns int
-     */
-    public function getUser_id()     {
-        return $this->user_id;
-    }
-
-    /**
-     * @returns SessionsModel
-     */
-    public function setUser_id(int $user_id = null)
-    {
-        $this->user_id = $user_id;
-        return $this;
-    }
-
-    /**
      * @returns string
      */
-    public function getStart()     {
-        return $this->start;
+    public function getName()     {
+        return $this->name;
     }
 
     /**
-     * @returns SessionsModel
+     * @returns CausesModel
      */
-    public function setStart(string $start = null)
+    public function setName(string $name = null)
     {
-        $this->start = $start;
-        return $this;
-    }
-
-    /**
-     * @returns string
-     */
-    public function getEnd()     {
-        return $this->end;
-    }
-
-    /**
-     * @returns SessionsModel
-     */
-    public function setEnd(string $end = null)
-    {
-        $this->end = $end;
+        $this->name = $name;
         return $this;
     }
 
@@ -119,14 +83,41 @@ abstract class BaseSessionsModel
      * "Referenced To" Remote Constraint Object Fetchers *
      *****************************************************/
 
+    /*****************************************************
+     * "Referenced By" Remote Constraint Object Fetchers *
+     *****************************************************/
+    /**
+     * @returns Models\CauseOrgasmLinkModel
+     */
+    public function fetchCauseOrgasmLinkObject(
+        $orderBy = null,
+        $orderDirection='ASC'
+    ) : Models\CauseOrgasmLinkModel {
+        /** @var $causeOrgasmLinkService Services\CauseOrgasmLinkService */
+        $causeOrgasmLinkService = App::Container()->get(Services\CauseOrgasmLinkService::class);
+        return $causeOrgasmLinkService->getByField('cause_id', $this->getId(), $orderBy, $orderDirection);
+    }
 
     /**
-     * @returns SessionsModel
+     * @returns Models\CauseOrgasmLinkModel[]
+     */
+    public function fetchCauseOrgasmLinkObjects(
+        $orderBy = null,
+        $orderDirection='ASC'
+    ) : array {
+        /** @var $causeOrgasmLinkService Services\CauseOrgasmLinkService */
+        $causeOrgasmLinkService = App::Container()->get(Services\CauseOrgasmLinkService::class);
+        return $causeOrgasmLinkService->getManyByField('cause_id', $this->getId(), $orderBy, $orderDirection);
+    }
+
+
+    /**
+     * @returns CausesModel
      */
     public function save()
     {
-        /** @var $tableGateway TableGateways\SessionsTableGateway */
-        $tableGateway = App::Container()->get(TableGateways\SessionsTableGateway::class);
+        /** @var $tableGateway TableGateways\CausesTableGateway */
+        $tableGateway = App::Container()->get(TableGateways\CausesTableGateway::class);
         return $tableGateway->save($this);
     }
 
@@ -137,8 +128,8 @@ abstract class BaseSessionsModel
      */
     public function destroy()
     {
-        /** @var $tableGateway TableGateways\SessionsTableGateway */
-        $tableGateway = App::Container()->get(TableGateways\SessionsTableGateway::class);
+        /** @var $tableGateway TableGateways\CausesTableGateway */
+        $tableGateway = App::Container()->get(TableGateways\CausesTableGateway::class);
         return $tableGateway->delete($this->getPrimaryKeys());
     }
 
@@ -150,9 +141,7 @@ abstract class BaseSessionsModel
     {
         return [
             'id',
-            'user_id',
-            'start',
-            'end',
+            'name',
         ];
     }
 }

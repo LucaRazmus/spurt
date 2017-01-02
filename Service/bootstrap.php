@@ -7,6 +7,8 @@ if (!defined("APP_ROOT")) {
 define("APP_NAME", "Spurt");
 define("APP_CORE_NAME", "Spurt\\Spurt");
 
+define("DEFAULT_SESSION_LIFESPAN", 86400);
+
 require_once("vendor/autoload.php");
 require_once("config/env.php");
 require_once("config/mysql.php");

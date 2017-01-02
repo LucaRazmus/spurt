@@ -63,11 +63,6 @@ class UsersTest extends \Segura\AppCore\Test\BaseTestCase
             'Spurt\Models\UsersModel',
             get_class($found)
         );
-        $found = $usersService->getByField('uuid', $random->getuuid());
-        $this->assertEquals(
-            'Spurt\Models\UsersModel',
-            get_class($found)
-        );
         $found = $usersService->getByField('username', $random->getusername());
         $this->assertEquals(
             'Spurt\Models\UsersModel',
@@ -83,17 +78,17 @@ class UsersTest extends \Segura\AppCore\Test\BaseTestCase
             'Spurt\Models\UsersModel',
             get_class($found)
         );
-        $found = $usersService->getByField('dateCreated', $random->getdateCreated());
+        $found = $usersService->getByField('dataIsPrivate', $random->getdataIsPrivate());
         $this->assertEquals(
             'Spurt\Models\UsersModel',
             get_class($found)
         );
-        $found = $usersService->getByField('dateLastSeen', $random->getdateLastSeen());
+        $found = $usersService->getByField('createdDate', $random->getcreatedDate());
         $this->assertEquals(
             'Spurt\Models\UsersModel',
             get_class($found)
         );
-        $found = $usersService->getByField('state', $random->getstate());
+        $found = $usersService->getByField('lastUpdatedDate', $random->getlastUpdatedDate());
         $this->assertEquals(
             'Spurt\Models\UsersModel',
             get_class($found)

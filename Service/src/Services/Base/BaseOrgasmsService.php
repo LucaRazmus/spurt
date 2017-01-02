@@ -22,7 +22,7 @@ use Zend\Db\Sql\Select;
  * extends this, or modify the Zenderator Template!     *
  ********************************************************/
 // @todo: Make all Services implement a ServicesInterface. - MB
-abstract class BaseCharactersService
+abstract class BaseOrgasmsService
     extends AbstractService
     implements ServiceInterface
 {
@@ -34,32 +34,32 @@ abstract class BaseCharactersService
     // Remote Constraints Table Gateways
 
     // Self Table Gateway
-    /** @var TableGateways\CharactersTableGateway */
-    protected $charactersTableGateway;
+    /** @var TableGateways\OrgasmsTableGateway */
+    protected $orgasmsTableGateway;
 
     /**
      * Constructor.
      *
      * @param TableGateways\UsersTableGateway $usersTableGateway
-     * @param TableGateways\CharactersTableGateway $charactersTableGateway
+     * @param TableGateways\OrgasmsTableGateway $orgasmsTableGateway
      */
     public function __construct(
         TableGateways\UsersTableGateway $usersTableGateway,
-        TableGateways\CharactersTableGateway $charactersTableGateway
+        TableGateways\OrgasmsTableGateway $orgasmsTableGateway
     )
     {
         $this->usersTableGateway = $usersTableGateway;
-        $this->charactersTableGateway = $charactersTableGateway;
+        $this->orgasmsTableGateway = $orgasmsTableGateway;
     }
 
-    public function getNewTableGatewayInstance() : TableGateways\CharactersTableGateway
+    public function getNewTableGatewayInstance() : TableGateways\OrgasmsTableGateway
     {
-        return $this->charactersTableGateway;
+        return $this->orgasmsTableGateway;
     }
     
-    public function getNewModelInstance($dataExchange = []) : Models\CharactersModel
+    public function getNewModelInstance($dataExchange = []) : Models\OrgasmsModel
     {
-        return $this->charactersTableGateway->getNewModelInstance($dataExchange);
+        return $this->orgasmsTableGateway->getNewModelInstance($dataExchange);
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class BaseCharactersService
      * @param array|null $wheres
      * @param string|null $order
      * @param string|null $orderDirection
-     * @return Models\CharactersModel[]
+     * @return Models\OrgasmsModel[]
      */
     public function getAll(
         int $limit = null,
@@ -79,8 +79,8 @@ abstract class BaseCharactersService
     )
     {
 
-        $charactersTable = $this->getNewTableGatewayInstance();
-        list($allCharacterss, $count) = $charactersTable->fetchAll(
+        $orgasmsTable = $this->getNewTableGatewayInstance();
+        list($allOrgasmss, $count) = $orgasmsTable->fetchAll(
             $limit,
             $offset,
             $wheres,
@@ -89,9 +89,9 @@ abstract class BaseCharactersService
         );
         $return = [];
 
-        if ($allCharacterss instanceof ResultSet) {
-            foreach ($allCharacterss as $characters) {
-                $return[] = $characters;
+        if ($allOrgasmss instanceof ResultSet) {
+            foreach ($allOrgasmss as $orgasms) {
+                $return[] = $orgasms;
             }
         }
         return $return;
@@ -99,51 +99,55 @@ abstract class BaseCharactersService
 
     /**
      * @param int $id
-     * @return Models\CharactersModel
+     * @return Models\OrgasmsModel
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getById(int $id) : Models\CharactersModel
+    public function getById(int $id) : Models\OrgasmsModel
     {
-        /** @var TableGateways\CharactersTableGateway $charactersTable */
-        $charactersTable = $this->getNewTableGatewayInstance();
-        return $charactersTable->getById($id);
+        /** @var TableGateways\OrgasmsTableGateway $orgasmsTable */
+        $orgasmsTable = $this->getNewTableGatewayInstance();
+        return $orgasmsTable->getById($id);
     }
 
     /**
      * @param string $field
      * @param $value
-     * @return Models\CharactersModel
+     * @param $orderBy string Field to sort by
+     * @param $orderDirection string Direction to sort (Select::ORDER_ASCENDING || Select::ORDER_DESCENDING)
+     * @return Models\OrgasmsModel
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getByField(string $field, $value) : Models\CharactersModel
+    public function getByField(string $field, $value, $orderBy = null, $orderDirection = Select::ORDER_ASCENDING) : Models\OrgasmsModel
     {
-        /** @var TableGateways\CharactersTableGateway $charactersTable */
-        $charactersTable = $this->getNewTableGatewayInstance();
-        return $charactersTable->getByField($field, $value);
+        /** @var TableGateways\OrgasmsTableGateway $orgasmsTable */
+        $orgasmsTable = $this->getNewTableGatewayInstance();
+        return $orgasmsTable->getByField($field, $value, $orderBy, $orderDirection);
     }
 
     /**
      * @param string $field
      * @param $value
-     * @return Models\CharactersModel[]
+     * @param $orderBy string Field to sort by
+     * @param $orderDirection string Direction to sort (Select::ORDER_ASCENDING || Select::ORDER_DESCENDING)
+     * @return Models\OrgasmsModel[]
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getManyByField(string $field, $value) : array
+    public function getManyByField(string $field, $value, $orderBy = null, $orderDirection = Select::ORDER_ASCENDING) : array
     {
-        /** @var TableGateways\CharactersTableGateway $charactersTable */
-        $charactersTable = $this->getNewTableGatewayInstance();
-        return $charactersTable->getManyByField($field, $value);
+        /** @var TableGateways\OrgasmsTableGateway $orgasmsTable */
+        $orgasmsTable = $this->getNewTableGatewayInstance();
+        return $orgasmsTable->getManyByField($field, $value, $orderBy, $orderDirection);
     }
 
     /**
-     * @return Models\CharactersModel
+     * @return Models\OrgasmsModel
      * @throws \Segura\AppCore\Exceptions\TableGatewayException
      */
-    public function getRandom() : Models\CharactersModel
+    public function getRandom() : Models\OrgasmsModel
     {
-        /** @var TableGateways\CharactersTableGateway $charactersTable */
-        $charactersTable = $this->getNewTableGatewayInstance();
-        return $charactersTable->fetchRandom();
+        /** @var TableGateways\OrgasmsTableGateway $orgasmsTable */
+        $orgasmsTable = $this->getNewTableGatewayInstance();
+        return $orgasmsTable->fetchRandom();
     }
 
     /**
@@ -152,10 +156,10 @@ abstract class BaseCharactersService
      */
     public function createFromArray($dataExchange)
     {
-        /** @var TableGateways\CharactersTableGateway $charactersTable */
-        $charactersTable = $this->getNewTableGatewayInstance();
-        $characters = $this->getNewModelInstance($dataExchange);
-        return $charactersTable->save($characters);
+        /** @var TableGateways\OrgasmsTableGateway $orgasmsTable */
+        $orgasmsTable = $this->getNewTableGatewayInstance();
+        $orgasms = $this->getNewModelInstance($dataExchange);
+        return $orgasmsTable->save($orgasms);
     }
 
     /**
@@ -164,23 +168,23 @@ abstract class BaseCharactersService
      */
     public function deleteByID($id) : int
     {
-        /** @var TableGateways\CharactersTableGateway $charactersTable */
-        $charactersTable = $this->getNewTableGatewayInstance();
-        return $charactersTable->delete(['id' => $id]);
+        /** @var TableGateways\OrgasmsTableGateway $orgasmsTable */
+        $orgasmsTable = $this->getNewTableGatewayInstance();
+        return $orgasmsTable->delete(['id' => $id]);
     }
 
     public function getTermPlural() : string
     {
-        return 'Characters';
+        return 'Orgasms';
     }
 
     public function getTermSingular() : string
     {
-        return 'Characters';
+        return 'Orgasms';
     }
 
     /**
-     * @returns Models\CharactersModel
+     * @returns Models\OrgasmsModel
      */
     public function getMockObject()
     {
