@@ -5,6 +5,6 @@ $app->group("/v1", function () {
 });
 
 $app->get("/", function () {
-    header("Location: /v1");
+    header("Location: /dashboard");
     exit;
 });

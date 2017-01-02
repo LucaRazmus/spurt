@@ -26,3 +26,10 @@ $this->container[\Spurt\Controllers\MessageController::class] = function (\Slim\
         $c->get(\Spurt\Services\MessagesService::class)
     );
 };
+
+$this->container[\Spurt\Controllers\UserController::class] = function (\Slim\Container $container){
+    return new \Spurt\Controllers\UserController(
+        $container->get(\Spurt\Services\UsersService::class),
+        $container->get("view")
+    );
+};
