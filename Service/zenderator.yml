@@ -1,0 +1,5 @@
+templates:
+  - Models
+  - Services
+formatting:
+  - clean

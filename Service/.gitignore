@@ -1,0 +1,7 @@
+version.txt
+vendor/
+.idea
+build
+.php_cs.cache
+*.*~
+.phpunit-cas.db

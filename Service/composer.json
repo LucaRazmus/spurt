@@ -1,0 +1,42 @@
+{
+    "name": "matthewbaggett/spurt",
+    "authors": [
+        {
+            "name": "Matthew Baggett",
+            "email": "matthew@baggett.me"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git@github.com:segurasystems/LibZenderator.git"
+        },
+        {
+            "type": "vcs",
+            "url":  "git@github.com:segurasystems/LibSessions.git"
+        }
+    ],
+    "require": {
+        "segura/appcore": "dev-master",
+        "react/react": "^0.4.2",
+        "clue/redis-react": "^0.5.1"
+    },
+    "require-dev": {
+        "segura/zenderator": "dev-master",
+        "johnkary/phpunit-speedtrap": "~1.0@dev",
+        "lstrojny/phpunit-clever-and-smart": "0.*",
+        "fzaninotto/Faker": "^1.6.0",
+        "phpunit/phpunit": "5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spurt\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Spurt\\Test\\": "tests/",
+            "Zenderator\\Test\\": "vendor/segura/zenderator/tests/"
+        }
+    }
+}

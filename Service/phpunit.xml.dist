@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="bootstrap.php"
+         colors="true"
+         stopOnFailure="false"
+         syntaxCheck="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true">
+
+    <php>
+        <ini name="memory_limit" value="3000M"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="models">
+            <directory>tests/Models/</directory>
+        </testsuite>
+
+        <testsuite name="api">
+            <directory>tests/Api/</directory>
+        </testsuite>
+
+        <testsuite name="services">
+            <directory>tests/Services/</directory>
+        </testsuite>
+    </testsuites>
+
+    <logging>
+        <log type="coverage-clover" target="build/clover.xml"/>
+        <log type="coverage-html" target="build"/>
+    </logging>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src</directory>
+            <exclude>
+                <directory>./src/Routes/</directory>
+                <directory>./tests</directory>
+                <directory>./vendor</directory>
+                <directory>./config</directory>
+                <directory>./build</directory>
+                <directory>./generator</directory>
+                <directory>./views</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
+   <listeners>
+        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener" />
+    </listeners>
+
+
+</phpunit>
