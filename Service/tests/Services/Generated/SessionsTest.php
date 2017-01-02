@@ -63,7 +63,7 @@ class SessionsTest extends \Segura\AppCore\Test\BaseTestCase
             'Spurt\Models\SessionsModel',
             get_class($found)
         );
-        $found = $sessionsService->getByField('user_id', $random->getuser_id());
+        $found = $sessionsService->getByField('userId', $random->getuserId());
         $this->assertEquals(
             'Spurt\Models\SessionsModel',
             get_class($found)

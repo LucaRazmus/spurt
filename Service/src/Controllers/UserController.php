@@ -42,6 +42,12 @@ class UserController extends Controller
             $remember
         );
 
-        $this->usersService->doLogin($email, $password, $remember ? DEFAULT_SESSION_LIFESPAN * 364 : DEFAULT_SESSION_LIFESPAN);
+        $session = $this->usersService->doLogin($email, $password, $remember ? DEFAULT_SESSION_LIFESPAN * 364 : DEFAULT_SESSION_LIFESPAN);
+
+        if(!$session){
+            return $response->withRedirect("/login");
+        }else{
+            return $response->withRedirect("/dashboard");
+        }
     }
 }

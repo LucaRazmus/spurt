@@ -33,12 +33,12 @@ class SessionsTest extends \Segura\AppCore\Test\BaseTestCase
     {
         $data = [];
         $data['id'] = self::getFaker()->randomDigitNotNull;
-        $data['user_id'] = self::getFaker()->randomDigitNotNull;
+        $data['userId'] = self::getFaker()->randomDigitNotNull;
         $data['start'] = self::getFaker()->word;
         $data['end'] = self::getFaker()->word;
         $this->testInstance = new SessionsModel($data);
         $this->assertEquals($data['id'], $this->testInstance->getId());
-        $this->assertEquals($data['user_id'], $this->testInstance->getUser_id());
+        $this->assertEquals($data['userId'], $this->testInstance->getUserId());
         $this->assertEquals($data['start'], $this->testInstance->getStart());
         $this->assertEquals($data['end'], $this->testInstance->getEnd());
     }
@@ -122,8 +122,8 @@ class SessionsTest extends \Segura\AppCore\Test\BaseTestCase
     {
         $this->assertTrue(method_exists($sessions, "getid"));
         $this->assertTrue(method_exists($sessions, "setid"));
-        $this->assertTrue(method_exists($sessions, "getuser_id"));
-        $this->assertTrue(method_exists($sessions, "setuser_id"));
+        $this->assertTrue(method_exists($sessions, "getuserId"));
+        $this->assertTrue(method_exists($sessions, "setuserId"));
         $this->assertTrue(method_exists($sessions, "getstart"));
         $this->assertTrue(method_exists($sessions, "setstart"));
         $this->assertTrue(method_exists($sessions, "getend"));
@@ -134,8 +134,8 @@ class SessionsTest extends \Segura\AppCore\Test\BaseTestCase
         $testSessions->setid($input);
         $this->assertEquals($input, $testSessions->getid());
         $input = self::getFaker()->randomDigitNotNull;
-        $testSessions->setuser_id($input);
-        $this->assertEquals($input, $testSessions->getuser_id());
+        $testSessions->setuserId($input);
+        $this->assertEquals($input, $testSessions->getuserId());
         $input = self::getFaker()->word;
         $testSessions->setstart($input);
         $this->assertEquals($input, $testSessions->getstart());

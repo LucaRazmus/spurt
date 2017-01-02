@@ -72,8 +72,8 @@ abstract class BaseSessionsTableGateway extends AbstractTableGateway
         'id' => null,
         // start. Type = datetime. PHPType = string. Has no related objects.
         'start' => $this->faker->dateTime()->format("Y-m-d H:i:s"), // @todo: Make datetime fields accept DateTime objects instead of strings. - MB
-        // user_id. Type = int. PHPType = int. Has no related objects.
-        'user_id' => $this->faker->numberBetween(1, 100000000),
+        // userId. Type = int. PHPType = int. Has no related objects.
+        'userId' => $this->faker->numberBetween(1, 100000000),
       ];
       $newSessions = $this->getNewModelInstance($newSessionsData);
       return $newSessions;

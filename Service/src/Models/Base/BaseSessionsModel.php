@@ -29,7 +29,7 @@ abstract class BaseSessionsModel
 
     // Declare what fields are available on this object
     const FIELD_ID = 'id';
-    const FIELD_USER_ID = 'user_id';
+    const FIELD_USERID = 'userId';
     const FIELD_START = 'start';
     const FIELD_END = 'end';
 
@@ -38,7 +38,7 @@ abstract class BaseSessionsModel
     protected $_autoincrement_keys = ['id'];
 
     protected $id;
-    protected $user_id;
+    protected $userId;
     protected $start;
     protected $end;
 
@@ -69,16 +69,16 @@ abstract class BaseSessionsModel
     /**
      * @returns int
      */
-    public function getUser_id()     {
-        return $this->user_id;
+    public function getUserId()     {
+        return $this->userId;
     }
 
     /**
      * @returns SessionsModel
      */
-    public function setUser_id(int $user_id = null)
+    public function setUserId(int $userId = null)
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
         return $this;
     }
 
@@ -150,7 +150,7 @@ abstract class BaseSessionsModel
     {
         return [
             'id',
-            'user_id',
+            'userId',
             'start',
             'end',
         ];
